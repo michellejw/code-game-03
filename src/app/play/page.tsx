@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { basicMathPuzzles } from '@/puzzles/basic-math';
-import { GameSetup, Puzzle } from '@/types/puzzles';
+import { GameSetup, PuzzleSet } from '@/types/puzzles';
+import { loadPuzzleSets } from '@/utils/loadPuzzleSets';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
@@ -13,29 +13,48 @@ const PyodideTerminal = dynamic(() => import('@/components/PyodideTerminal'), {
 
 export default function Play() {
   const [gameSetup, setGameSetup] = useState<GameSetup | null>(null);
+  const [currentPuzzleSet, setCurrentPuzzleSet] = useState<PuzzleSet | null>(null);
   const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
   const [showLocationClue, setShowLocationClue] = useState(false);
   const [unlockCode, setUnlockCode] = useState('');
   const [isGameComplete, setIsGameComplete] = useState(false);
 
   useEffect(() => {
-    const savedSetup = localStorage.getItem('gameSetup');
-    if (savedSetup) {
-      setGameSetup(JSON.parse(savedSetup));
+    // Get the selected puzzle set ID
+    const selectedSetId = localStorage.getItem('currentGameSet');
+    if (!selectedSetId) {
+      return;
+    }
+
+    // Load all puzzle sets and find the selected one
+    const allPuzzleSets = loadPuzzleSets();
+    const puzzleSet = allPuzzleSets.find(set => set.id === selectedSetId);
+    if (!puzzleSet) {
+      return;
+    }
+    setCurrentPuzzleSet(puzzleSet);
+
+    // Get the game setup for this puzzle set
+    const storedSetups = localStorage.getItem('gameSetups');
+    if (storedSetups) {
+      const setups = JSON.parse(storedSetups);
+      const setup = setups[selectedSetId];
+      if (setup) {
+        setGameSetup(setup);
+      }
     }
   }, []);
-
-  const currentPuzzle = gameSetup ? 
-    basicMathPuzzles.puzzles[currentPuzzleIndex] : null;
 
   const handleCodeSubmission = async (code: string) => {
     setShowLocationClue(true);
   };
 
   const handleUnlockCodeSubmit = () => {
-    const correctCode = gameSetup?.locationClues[currentPuzzleIndex]?.unlockCode;
+    if (!gameSetup || !currentPuzzleSet) return;
+
+    const correctCode = gameSetup.locationClues[currentPuzzleIndex]?.unlockCode;
     if (unlockCode === correctCode) {
-      if (currentPuzzleIndex === basicMathPuzzles.puzzles.length - 1) {
+      if (currentPuzzleIndex === currentPuzzleSet.puzzles.length - 1) {
         setIsGameComplete(true);
       } else {
         setCurrentPuzzleIndex(prev => prev + 1);
@@ -45,14 +64,14 @@ export default function Play() {
     }
   };
 
-  if (!gameSetup) {
+  if (!gameSetup || !currentPuzzleSet) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-6xl mb-4 text-gray-800 font-londrina-shadow">No Active Game</h1>
-          <p className="mb-4 text-gray-600 font-inconsolata">Please ask a parent to set up the game first.</p>
-          <Link href="/setup" className="text-blue-600 hover:underline font-inconsolata">
-            Go to Setup
+          <p className="mb-4 text-gray-600 font-inconsolata">Please select a game to play first.</p>
+          <Link href="/select-set" className="text-blue-600 hover:underline font-inconsolata">
+            Choose a Game
           </Link>
         </div>
       </div>
@@ -74,11 +93,13 @@ export default function Play() {
     );
   }
 
+  const currentPuzzle = currentPuzzleSet.puzzles[currentPuzzleIndex];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-6xl text-center mb-8 text-gray-800 font-londrina-shadow">
-          Puzzle {currentPuzzleIndex + 1}
+          {currentPuzzleSet.name}: Puzzle {currentPuzzleIndex + 1}
         </h1>
 
         {currentPuzzle && !showLocationClue && (

@@ -7,8 +7,12 @@ export default function Home() {
   const [isGameSetup, setIsGameSetup] = useState(false);
 
   useEffect(() => {
-    const gameSetup = localStorage.getItem('gameSetup');
-    setIsGameSetup(!!gameSetup);
+    const gameSetups = localStorage.getItem('gameSetups');
+    if (gameSetups) {
+      const setups = JSON.parse(gameSetups);
+      // Check if any setups exist and are complete
+      setIsGameSetup(Object.keys(setups).length > 0);
+    }
   }, []);
 
   return (
@@ -54,7 +58,7 @@ export default function Home() {
                   </p>
                 </div>
               )}
-              <Link href={isGameSetup ? "/play" : "#"}
+              <Link href={isGameSetup ? "/select-set" : "#"}
                     className={`block p-8 bg-white rounded-lg shadow-lg transition-all ${
                       isGameSetup ? 'hover:shadow-xl transform hover:-translate-y-1' : 'cursor-not-allowed'
                     }`}>
