@@ -3,19 +3,106 @@
 @tailwind utilities;
 
 :root {
+  --foreground: #1a1a1a;
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --accent-purple: #6366f1;
+  --accent-blue: #3b82f6;
+  --retro-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inconsolata), 'Courier New', Courier, monospace;
+  font-weight: 400;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-karla), system-ui, -apple-system;
+  color: #1a1a1a;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+p, span, div {
+  color: #333333;
+  font-family: var(--font-inconsolata), 'Courier New', Courier, monospace;
+  font-weight: 400;
+}
+
+/* Form elements with retro-modern style */
+input, textarea {
+  font-family: var(--font-inconsolata), 'Courier New', Courier, monospace;
+  font-weight: 500;
+  background-color: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  box-shadow: var(--retro-shadow);
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #666666;
+  font-weight: 400;
+}
+
+/* Modern card styling */
+.card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: var(--retro-shadow);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+/* Button styling */
+.btn {
+  font-family: var(--font-karla), system-ui, -apple-system;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  box-shadow: var(--retro-shadow);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+/* Gradient text for special headings */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gray-600 {
+  color: #4a4a4a !important;
 }
