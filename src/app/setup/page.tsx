@@ -46,7 +46,7 @@ export default function Setup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-6xl text-center mb-8 text-gray-800 font-londrina-shadow">
           Game Setup

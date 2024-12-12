@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const PyodideTerminal = dynamic(() => import('@/components/PyodideTerminal'), {
   ssr: false,
-  loading: () => <div>Loading Python environment...</div>
+  loading: () => <div className="text-gray-600 font-inconsolata">Loading Python environment...</div>
 });
 
 export default function Play() {
@@ -47,7 +47,7 @@ export default function Play() {
 
   if (!gameSetup) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-6xl mb-4 text-gray-800 font-londrina-shadow">No Active Game</h1>
           <p className="mb-4 text-gray-600 font-inconsolata">Please ask a parent to set up the game first.</p>
@@ -61,7 +61,7 @@ export default function Play() {
 
   if (isGameComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-6xl mb-4 text-gray-800 font-londrina-shadow">🎉 Congratulations! 🎉</h1>
           <p className="text-xl mb-8 text-gray-600 font-inconsolata">You've completed all the puzzles!</p>
@@ -75,7 +75,7 @@ export default function Play() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-teal-100 p-8 pt-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-6xl text-center mb-8 text-gray-800 font-londrina-shadow">
           Puzzle {currentPuzzleIndex + 1}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Londrina_Shadow, Londrina_Solid, Inconsolata } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/NavBar";
 
 const londrinaShadow = Londrina_Shadow({
   weight: ['400'],
@@ -32,7 +33,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${londrinaShadow.variable} ${londrinaSolid.variable} ${inconsolata.variable} font-mono`}>
+      <body className={`${londrinaShadow.variable} ${londrinaSolid.variable} ${inconsolata.variable} font-mono relative`}>
+        <NavBar />
         {children}
       </body>
     </html>
