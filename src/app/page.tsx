@@ -25,11 +25,11 @@ export default function Home() {
         <div className="flex flex-col gap-8 mt-12">
           {/* Step 1 */}
           <div className="relative">
-            <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
+            <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center z-20 shadow-lg">
               <span className="font-londrina-solid text-white text-xl">1</span>
             </div>
             <Link href="/setup" 
-                  className="block p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                  className="block p-8 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 relative z-10">
               <h2 className="text-3xl text-gray-700 mb-3 font-londrina-solid">🎮 Set up clues!</h2>
               <p className="text-gray-600 font-inconsolata mb-2">
                 Set up a new game, choose puzzle sets, and place clues around the house.
@@ -47,10 +47,10 @@ export default function Home() {
 
           {/* Step 2 */}
           <div className="relative">
-            <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-teal-500 flex items-center justify-center">
+            <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-teal-500 flex items-center justify-center z-20 shadow-lg">
               <span className="font-londrina-solid text-white text-xl">2</span>
             </div>
-            <div className={`relative ${!isGameSetup ? 'opacity-50' : ''}`}>
+            <div className={`relative ${!isGameSetup ? 'opacity-50' : ''} z-10`}>
               {!isGameSetup && (
                 <div className="absolute inset-0 bg-gray-50 bg-opacity-90 rounded-lg flex items-center justify-center z-10">
                   <p className="text-gray-600 font-inconsolata">
@@ -69,9 +69,6 @@ export default function Home() {
               </Link>
             </div>
           </div>
-
-          {/* Visual connection between steps */}
-          <div className="absolute left-[20px] top-[180px] w-0.5 h-[200px] bg-gradient-to-b from-blue-500 to-teal-500"></div>
         </div>
       </div>
     </main>
