@@ -2,14 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar() {
   const pathname = usePathname();
   const router = useRouter();
   
-  // Don't show on home page
-  if (pathname === '/') return null;
-
   const handleReset = () => {
     if (window.confirm('Are you sure you want to reset all game setups? This will clear all clue locations and hiding spots.')) {
       localStorage.removeItem('gameSetups');
@@ -21,45 +22,47 @@ export default function NavBar() {
   return (
     <nav className="absolute top-0 left-0 w-full p-4 z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link 
-          href="/"
-          className="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors font-inconsolata group"
-        >
-          <svg 
-            className="w-5 h-5 mr-2 transform transition-transform group-hover:-translate-x-1" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
+        {/* Left side - only show back button if not on home page */}
+        {pathname !== '/' && (
+          <Link 
+            href="/"
+            className="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors font-inconsolata group"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+            <FontAwesomeIcon 
+              icon={faArrowLeft}
+              className="w-4 h-4 mr-2 transform transition-transform group-hover:-translate-x-1" 
             />
-          </svg>
-          back home
-        </Link>
+            back home
+          </Link>
+        )}
+        {/* If on home page, add an empty div to maintain flex layout */}
+        {pathname === '/' && <div></div>}
 
-        <button
-          onClick={handleReset}
-          className="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors font-inconsolata group"
-        >
-          <svg
-            className="w-5 h-5 mr-2 transform transition-transform group-hover:rotate-90"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Right side */}
+        <div className="flex items-center gap-4">
+          <Link
+            href="https://github.com/michellejw/code-game-03"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors font-inconsolata group"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            <FontAwesomeIcon 
+              icon={faGithub} 
+              className="w-6 h-6 mr-4 transition-transform hover:scale-110" 
             />
-          </svg>
-          reset game
-        </button>
+          </Link>
+
+          <button
+            onClick={handleReset}
+            className="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors font-inconsolata group"
+          >
+            <FontAwesomeIcon 
+              icon={faArrowsRotate}
+              className="w-4 h-4 mr-2 transform transition-transform group-hover:-translate-x-1" 
+            />
+            reset game
+          </button>
+        </div>
       </div>
     </nav>
   );

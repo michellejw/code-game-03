@@ -31,18 +31,6 @@ export const moreMathPuzzles: PuzzleSet = {
       ]
     },
     {
-      id: 'square-number',
-      title: 'Square Numbers',
-      question: 'Write a function that squares a number (multiplies it by itself).',
-      hint: 'Multiply the number by itself, or use ** 2',
-      startingCode: 'def square_number(n):\n    # Write your code here\n    pass',
-      solution: 'return n ** 2',
-      testCases: [
-        { input: [2], expectedOutput: 4 },
-        { input: [5], expectedOutput: 25 }
-      ]
-    },
-    {
       id: 'remainder',
       title: 'Find the Remainder',
       question: 'Write a function that returns the remainder when dividing a number by 2.',
